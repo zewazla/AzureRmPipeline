@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Pay-As-You-Go(924c4739-7181-474f-be5f-594022d66b9c)'
+    subscriptionId: '924c4739-7181-474f-be5f-594022d66b9c'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'appsvc_linux_centralus'
+    location: 'West US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/zewazla/AzureRmPipeline/master/CreateWebApp/azuredeploy.json'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
